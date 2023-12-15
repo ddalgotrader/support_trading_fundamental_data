@@ -28,8 +28,6 @@ class FmpConnector():
     
     get_instruments - return all available instruments of given type
     
-    get_historical_prices - return all prices of instrument from given time period
-    
     get_daily_prices - return daily prices of given instrument from whole available time period
     
     get_market_news - return news for given instrument from given period of time
@@ -111,6 +109,7 @@ class FmpConnector():
         *symbol -> str
         report_type -> str{balance_statement, income_statement, cashflow_statement, full_statement}, default: balance_statement
         period -> str{annual, quarter}, default: annual
+        limit -> number, default: 10
         as_reported -> boolean{True, False}, default: False
         
         
@@ -194,45 +193,6 @@ class FmpConnector():
         except ValueError:
             print(data)
         
-        return df
-    
-    
-    def get_historical_prices(self,symbol, interval, start_date, end_date):
-        
-        '''
-        Description
-        ============================================
-        Return all available prices for given instrument from given time period
-        
-        Parameters
-        ============================================
-        
-        *symbol -> str - symbol of given instrument
-        *interval -> str{1min, 5min, 15min, 30min, 1hour, 4hour}
-        *start_date -> str in format 'yyyy-MM-dd'
-        *end_date -> str in format 'yyyy-MM-dd'
-        
-        Returns
-        ============================================
-        pandas dataframe
-        
-        '''
-        
-        if interval not in ['1min', '5min', '15min', '30min', '1hour', '4hour']:
-            print(f"'{interval}' is not valid option for interval - choose from possible options [1min, 5min, 15min, 30min, 1hour, 4hour]")
-            return 0
-        
-        endpoint=f'https://financialmodelingprep.com/api/v3/historical-chart/{interval}/{symbol}?from={start_date}&to={end_date}&apikey={self.apikey}'
-        data=requests.get(endpoint).json()
-        df=pd.DataFrame()
-        try:
-            df=pd.DataFrame.from_dict(data)
-        except ValueError:
-            print(data)
-        df.attrs['instrument']=symbol
-        df.attrs['interval']=interval
-        df['date']=pd.to_datetime(df['date'])
-        df=df.set_index('date')
         return df
         
         
