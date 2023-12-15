@@ -32,7 +32,7 @@ class FmpConnector():
     
     get_market_news - return news for given instrument from given period of time
     
-    get_sentiment - return historical social sentiment for given company
+    get_sentiment - return historical social sentiment for given stock company
     
     draw_chart - return plotly figure with chart for defined kind
     
@@ -278,7 +278,7 @@ class FmpConnector():
         '''
         Description
         ============================================
-        return historical social sentiment for given company
+        Return historical social sentiment for given stock company
         
         Parameters
         ============================================
