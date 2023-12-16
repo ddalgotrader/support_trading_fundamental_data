@@ -225,6 +225,7 @@ class FmpConnector():
         df.attrs['instrument']=symbol
         df['date']=pd.to_datetime(df['date'])
         df=df.set_index('date')
+        df=df.sort_index()
         return df
     
     def get_market_news(self, market_type, symbol=None, limit=10):
